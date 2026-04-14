@@ -19,12 +19,12 @@ function ZenWaterPavilion() {
       <mesh position={[0, -1.5, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[100, 100]} />
         <meshPhysicalMaterial 
-          color="#0f172a" 
-          roughness={0.02} 
-          metalness={0.9}
+          color="#e0f2fe" 
+          roughness={0.01} 
+          metalness={0.8}
           reflectivity={1}
           clearcoat={1}
-          clearcoatRoughness={0.1}
+          clearcoatRoughness={0.05}
         />
       </mesh>
 
@@ -35,8 +35,8 @@ function ZenWaterPavilion() {
             <boxGeometry args={[3, 0.2, 1.2]} />
             <meshStandardMaterial 
               map={concreteTexture}
-              color="#d1d5db" 
-              roughness={0.7} 
+              color="#e5e7eb" 
+              roughness={0.6} 
             />
           </mesh>
         </Float>
@@ -47,7 +47,7 @@ function ZenWaterPavilion() {
         {/* Pavilion Base */}
         <mesh position={[0, 0.1, 0]} receiveShadow castShadow>
           <boxGeometry args={[12, 0.4, 8]} />
-          <meshStandardMaterial map={concreteTexture} color="#9ca3af" roughness={0.8} />
+          <meshStandardMaterial map={concreteTexture} color="#d1d5db" roughness={0.7} />
         </mesh>
 
         {/* Golden Pillars */}
@@ -57,18 +57,18 @@ function ZenWaterPavilion() {
         ].map((pos, i) => (
           <mesh key={`pillar-${i}`} position={pos as [number, number, number]} castShadow>
             <cylinderGeometry args={[0.08, 0.08, 4, 16]} />
-            <meshStandardMaterial color="#cfa861" metalness={1} roughness={0.1} />
+            <meshStandardMaterial color="#facc15" metalness={1} roughness={0.1} />
           </mesh>
         ))}
 
         {/* Minimalist Floating Roof */}
         <mesh position={[0, 4, 0]} castShadow receiveShadow>
           <boxGeometry args={[13, 0.3, 9]} />
-          <meshStandardMaterial color="#111218" roughness={0.9} />
+          <meshStandardMaterial color="#ffffff" roughness={0.9} />
         </mesh>
         
         {/* Ambient warm light inside pavilion */}
-        <pointLight position={[0, 3, 0]} intensity={3} color="#ffebd6" distance={8} />
+        <pointLight position={[0, 3, 0]} intensity={3} color="#f97316" distance={8} />
       </group>
       
       {/* Decorative Zen Stones in water */}
@@ -116,22 +116,22 @@ export default function Hero3D({ paused = false }: { paused?: boolean }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-full absolute inset-0 z-0 pointer-events-auto bg-[#060608]">
+    <div ref={containerRef} className="w-full h-full absolute inset-0 z-0 pointer-events-auto bg-mg-dark">
       {isVisible && !paused && (
         <Suspense fallback={null}>
           <Canvas 
             shadows 
-            dpr={[1, 1.5]} /* Essential for performance on high-DPI/mobile screens */
+            dpr={[1, 1.5]}
             camera={{ position: [10, 2, 10], fov: 45 }}
             gl={{ powerPreference: "high-performance", antialias: false }}
           >
-            <color attach="background" args={['#0f121a']} />
-            <fog attach="fog" args={['#0f121a', 10, 40]} />
-            <ambientLight intensity={0.3} color="#ffe5b4" />
+            <color attach="background" args={['#f8f9fa']} />
+            <fog attach="fog" args={['#f8f9fa', 15, 50]} />
+            <ambientLight intensity={0.8} color="#ffffff" />
             <directionalLight
-              position={[15, 10, -5]} /* Sunset angle */
-              intensity={3}
-              color="#fda403" /* Warm sunset color */
+              position={[20, 20, 10]}
+              intensity={2.5}
+              color="#fffcf0"
               castShadow
               shadow-mapSize={[1024, 1024]}
               shadow-bias={-0.0001}
@@ -145,10 +145,10 @@ export default function Hero3D({ paused = false }: { paused?: boolean }) {
               azimuth={[-Math.PI / 6, Math.PI / 6]}
             >
               <ZenWaterPavilion />
-              <Sparkles count={50} scale={25} size={1.5} speed={0.1} opacity={0.2} color="#fda403" position={[0, 2, -4]} />
+              <Sparkles count={40} scale={20} size={2} speed={0.2} opacity={0.4} color="#facc15" position={[0, 2, -4]} />
             </PresentationControls>
-            <ContactShadows position={[0, -1.49, 0]} opacity={0.5} scale={30} blur={2.5} far={4} color="#000000" />
-            <Environment preset="sunset" />
+            <ContactShadows position={[0, -1.49, 0]} opacity={0.3} scale={30} blur={3} far={4} color="#000000" />
+            <Environment preset="apartment" />
             <Preload all />
           </Canvas>
         </Suspense>

@@ -65,22 +65,22 @@ function ProjectCard({ project, index, onClick }: { project: any, index: number,
         className={`w-full ${index % 2 === 0 ? 'md:w-[80%]' : 'md:w-[70%]'} cursor-pointer group pointer-events-auto`}
         onClick={onClick}
       >
-        <div ref={ref} className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-mg-charcoal rounded-2xl shadow-2xl">
+        <div ref={ref} className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-mg-gray rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)]">
           <motion.img 
             style={{ y }}
             src={project.image} 
             alt={project.title}
-            className="absolute inset-0 w-full h-[120%] object-cover -top-[10%] transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+            className="absolute inset-0 w-full h-[120%] object-cover -top-[10%] transition-transform duration-1000 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-mg-dark/20 group-hover:bg-transparent transition-colors duration-500"></div>
+          <div className="absolute inset-0 bg-mg-dark/10 group-hover:bg-transparent transition-colors duration-500"></div>
         </div>
         <div className="mt-8 flex justify-between items-start">
           <div className="max-w-md">
-            <h3 className="font-serif text-2xl md:text-3xl font-light group-hover:text-mg-accent transition-colors duration-300">{project.title}</h3>
-            <p className="text-[10px] tracking-[0.2em] uppercase text-mg-accent mt-2 mb-4">{project.category}</p>
+            <h3 className="font-serif text-2xl md:text-3xl font-light group-hover:text-mg-accent-orange transition-colors duration-300">{project.title}</h3>
+            <p className="text-[10px] tracking-[0.2em] uppercase text-mg-accent-orange mt-2 mb-4">{project.category}</p>
             <p className="text-sm font-light text-mg-muted leading-relaxed">{project.description}</p>
           </div>
-          <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-mg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+          <span className="text-[10px] tracking-[0.2em] uppercase font-medium text-mg-accent-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
             View Project
           </span>
         </div>

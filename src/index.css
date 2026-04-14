@@ -5,21 +5,22 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Cormorant Garamond", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   
-  --color-mg-dark: #060608;
-  --color-mg-charcoal: #0b0c10;
-  --color-mg-gray: #111218;
-  --color-mg-white: #ffffff;
-  --color-mg-muted: #9597a1;
-  --color-mg-accent: #cfa861;
+  --color-mg-dark: #ffffff;
+  --color-mg-charcoal: #f9fafb;
+  --color-mg-gray: #f3f4f6;
+  --color-mg-white: #111827;
+  --color-mg-muted: #6b7280;
+  --color-mg-accent: #facc15;
+  --color-mg-accent-orange: #f97316;
 }
 
 @utility glass {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)];
+  @apply bg-white/40 backdrop-blur-xl border border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.05)];
 }
 
 @layer base {
   body {
-    @apply bg-mg-dark text-mg-white font-sans antialiased selection:bg-mg-accent selection:text-mg-dark;
+    @apply bg-mg-dark text-mg-white font-sans antialiased selection:bg-mg-accent/80 selection:text-mg-white;
   }
   
   h1, h2, h3, h4, h5, h6 {

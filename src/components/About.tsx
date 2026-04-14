@@ -4,7 +4,7 @@ export default function About() {
   return (
     <section id="about" className="py-32 md:py-48 bg-mg-charcoal text-mg-white relative overflow-hidden">
       {/* Decorative element */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-mg-accent/10 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-mg-accent-orange/10 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
       
       <div className="w-full px-6 md:px-12 max-w-7xl mx-auto z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">

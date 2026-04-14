@@ -72,12 +72,12 @@ export default function ProjectDetails({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: '100%' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[90] bg-mg-dark/98 backdrop-blur-3xl overflow-y-auto overflow-x-hidden pointer-events-auto"
+          className="fixed inset-0 z-[90] bg-mg-dark backdrop-blur-3xl overflow-y-auto overflow-x-hidden pointer-events-auto"
         >
           {/* Header / Close */}
           <div className="sticky top-0 z-50 flex justify-between items-center p-6 md:p-12 text-mg-white pointer-events-none">
             <h2 className="font-serif text-3xl font-light">{project.title}</h2>
-            <button onClick={onClose} className="p-4 pointer-events-auto hover:scale-110 transition-transform">
+            <button onClick={onClose} className="p-4 pointer-events-auto hover:text-mg-accent-orange hover:scale-110 transition-all">
               <X className="w-8 h-8" />
             </button>
           </div>
@@ -124,18 +124,18 @@ export default function ProjectDetails({
                    className={`absolute w-[90%] md:w-[70%] max-w-6xl aspect-video ${isCenter ? 'cursor-grab active:cursor-grabbing pointer-events-auto shadow-2xl' : 'cursor-pointer pointer-events-auto'}`}
                    onClick={() => !isCenter && setCurrentIndex(i)}
                  >
-                   <img src={img} alt="" className={`w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-none rounded-sm ${!isCenter ? 'blur-[2px] brightness-50' : ''}`} />
+                   <img src={img} alt="" className={`w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.1)] pointer-events-none rounded-sm ${!isCenter ? 'blur-[2px] brightness-90 grayscale-[0.5]' : ''}`} />
                  </motion.div>
                )
              })}
             </motion.div>
 
              <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-8 z-20 pointer-events-auto">
-               <button onClick={prev} disabled={currentIndex === 0} className="p-4 rounded-full bg-mg-white/10 backdrop-blur-xl border border-white/20 disabled:opacity-30 hover:bg-mg-white/20 transition-colors">
-                 <ChevronLeft className="w-6 h-6 text-mg-white" />
+               <button onClick={prev} disabled={currentIndex === 0} className="p-4 rounded-full bg-mg-accent/10 backdrop-blur-xl border border-mg-accent/20 disabled:opacity-30 hover:bg-mg-accent/20 transition-colors">
+                 <ChevronLeft className="w-6 h-6 text-mg-accent-orange" />
                </button>
-               <button onClick={next} disabled={currentIndex === project.images.length - 1} className="p-4 rounded-full bg-mg-white/10 backdrop-blur-xl border border-white/20 disabled:opacity-30 hover:bg-mg-white/20 transition-colors">
-                 <ChevronRight className="w-6 h-6 text-mg-white" />
+               <button onClick={next} disabled={currentIndex === project.images.length - 1} className="p-4 rounded-full bg-mg-accent/10 backdrop-blur-xl border border-mg-accent/20 disabled:opacity-30 hover:bg-mg-accent/20 transition-colors">
+                 <ChevronRight className="w-6 h-6 text-mg-accent-orange" />
                </button>
              </div>
           </div>

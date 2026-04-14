@@ -33,7 +33,7 @@ export default function App() {
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 1, delay: 0.5 }}
-                  className="font-sans text-[10px] md:text-[12px] tracking-[0.8em] uppercase text-mg-accent mb-6 block font-medium"
+                  className="font-sans text-[10px] md:text-[12px] tracking-[0.8em] uppercase text-mg-accent-orange mb-6 block font-medium"
                 >
                   Bespoke Spaces
                 </motion.span>
@@ -53,7 +53,7 @@ export default function App() {
                     transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     className="flex items-baseline gap-4 ml-4 md:ml-24"
                   >
-                    <span className="text-mg-accent italic font-light">&</span>
+                    <span className="text-mg-accent-orange italic font-light">&</span>
                     <span className="font-light italic">Interior</span>
                     <span className="font-serif font-medium text-3xl md:text-6xl lg:text-8xl tracking-tight text-mg-white/90">Design</span>
                   </motion.div>
@@ -63,7 +63,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  className="mt-8 md:mt-12 max-w-md ml-4 md:ml-24 border-l border-mg-accent/30 pl-8"
+                  className="mt-8 md:mt-12 max-w-md ml-4 md:ml-24 border-l border-mg-accent-orange/30 pl-8"
                 >
                   <p className="text-mg-muted text-xs md:text-base font-light leading-relaxed">
                     Crafting timeless environments that merge architectural precision with soulful interior narratives.
