@@ -75,17 +75,17 @@ export default function ProjectDetails({
           className="fixed inset-0 z-[90] bg-mg-dark backdrop-blur-3xl overflow-y-auto overflow-x-hidden pointer-events-auto"
         >
           {/* Header / Close */}
-          <div className="sticky top-0 z-50 flex justify-between items-center p-6 md:p-12 text-mg-white pointer-events-none">
+          <div className="sticky top-0 z-50 flex justify-between items-center px-6 md:px-12 py-6 md:py-10 text-mg-white bg-mg-dark/80 backdrop-blur-md border-b border-mg-gray/5">
             <h2 className="font-serif text-3xl font-light">{project.title}</h2>
-            <button onClick={onClose} className="p-4 pointer-events-auto hover:text-mg-accent-orange hover:scale-110 transition-all">
+            <button onClick={onClose} className="p-4 hover:text-mg-accent-orange hover:scale-110 transition-all">
               <X className="w-8 h-8" />
             </button>
           </div>
 
           {/* 3D Carousel */}
           <div 
-            className="relative h-[60vh] md:h-[75vh] w-full flex items-center justify-center mt-4 overflow-visible" 
-            style={{ perspective: '2000px' }}
+            className="relative h-[60vh] md:h-[75vh] w-full flex items-center justify-center mt-12 md:mt-24 mb-12 md:mb-24 overflow-visible" 
+            style={{ perspective: '2400px' }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
@@ -127,11 +127,11 @@ export default function ProjectDetails({
                      damping: 25,
                      mass: 1
                    }}
-                   className={`absolute w-[85%] md:w-[65%] max-w-6xl aspect-[16/10] ${isCenter ? 'cursor-grab active:cursor-grabbing pointer-events-auto shadow-2xl' : 'cursor-pointer pointer-events-auto'}`}
+                   className={`absolute w-[80%] md:w-[60%] lg:w-[50%] aspect-[16/10] ${isCenter ? 'cursor-grab active:cursor-grabbing pointer-events-auto shadow-2xl' : 'cursor-pointer pointer-events-auto'}`}
                    onClick={() => !isCenter && setCurrentIndex(i)}
                    style={{ transformStyle: "preserve-3d" }}
                  >
-                   <div className="relative w-full h-full rounded-lg overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.15)] group">
+                   <div className="relative w-full h-full rounded-lg overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.12)] group">
                      <motion.img 
                        src={img} 
                        alt="" 
@@ -140,7 +140,7 @@ export default function ProjectDetails({
                          scale: isCenter ? 1.05 : 1
                        }}
                        transition={{ duration: 1 }}
-                       className={`w-full h-full object-cover pointer-events-none transition-all duration-700 ${!isCenter ? 'blur-[4px] brightness-75 grayscale-[0.3]' : 'brightness-105'}`} 
+                       className={`w-full h-full object-cover pointer-events-none transition-all duration-700 ${!isCenter ? 'blur-[6px] brightness-75 grayscale-[0.3]' : 'brightness-105'}`} 
                      />
                      <div className="absolute inset-0 bg-mg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                    </div>
@@ -149,7 +149,7 @@ export default function ProjectDetails({
              })}
             </motion.div>
 
-             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-8 z-20 pointer-events-auto">
+             <div className="absolute bottom-4 md:bottom-12 left-1/2 -translate-x-1/2 flex gap-8 z-20 pointer-events-auto">
                <button onClick={prev} disabled={currentIndex === 0} className="p-4 rounded-full bg-mg-accent/10 backdrop-blur-xl border border-mg-accent/20 disabled:opacity-30 hover:bg-mg-accent/20 transition-colors">
                  <ChevronLeft className="w-6 h-6 text-mg-accent-orange" />
                </button>
@@ -160,7 +160,7 @@ export default function ProjectDetails({
           </div>
 
           {/* Details with scroll animations */}
-          <div className="max-w-5xl mx-auto px-6 py-32">
+          <div className="max-w-6xl mx-auto px-6 md:px-12 py-24 md:py-32">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -169,28 +169,28 @@ export default function ProjectDetails({
             >
               <span className="text-[10px] uppercase tracking-[0.2em] text-mg-muted mb-8 block">{project.category}</span>
               <h3 className="text-4xl md:text-6xl font-serif font-light mb-12">Concept & Execution</h3>
-              <p className="text-xl md:text-3xl font-serif font-light leading-relaxed mb-24 max-w-4xl">
+              <p className="text-xl md:text-3xl font-serif font-light leading-relaxed mb-24 max-w-4xl text-mg-white/80">
                 {project.description}
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/10 pt-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 border-t border-mg-gray/20 pt-16">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
                 <h4 className="text-[10px] uppercase tracking-[0.2em] text-mg-muted mb-4">Location</h4>
-                <p className="font-serif text-2xl">{project.location}</p>
+                <p className="font-serif text-2xl text-mg-white">{project.location}</p>
               </motion.div>
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
                 <h4 className="text-[10px] uppercase tracking-[0.2em] text-mg-muted mb-4">Year</h4>
-                <p className="font-serif text-2xl">{project.year}</p>
+                <p className="font-serif text-2xl text-mg-white">{project.year}</p>
               </motion.div>
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
                 <h4 className="text-[10px] uppercase tracking-[0.2em] text-mg-muted mb-4">Role</h4>
-                <p className="font-serif text-2xl">{project.role}</p>
+                <p className="font-serif text-2xl text-mg-white leading-snug">{project.role}</p>
               </motion.div>
             </div>
 
             {/* Project Navigation */}
-            <div className="mt-32 pt-16 border-t border-white/10 flex justify-between items-center text-mg-white">
+            <div className="mt-32 pt-16 border-t border-mg-gray/20 flex justify-between items-center text-mg-white">
               {hasPrevProject ? (
                 <button 
                   onClick={onPrevProject}
@@ -204,7 +204,7 @@ export default function ProjectDetails({
               {hasNextProject ? (
                 <button 
                   onClick={onNextProject}
-                  className="group flex items-center gap-4 pointer-events-auto"
+                  className="group flex items-center gap-4 pointer-events-auto text-right"
                 >
                   <span className="text-[10px] uppercase tracking-[0.2em] font-medium">Next Project</span>
                   <ChevronRight className="w-6 h-6 text-mg-white group-hover:translate-x-2 transition-transform" />
