@@ -20,15 +20,36 @@ export default function Navbar() {
         className="fixed top-6 left-6 right-6 md:left-1/2 md:-translate-x-1/2 md:w-[90%] max-w-6xl z-50 text-mg-white py-4 px-8 pointer-events-none glass rounded-full"
       >
         <div className="w-full flex items-center justify-between">
-          <a href="#" className="font-sans text-[10px] tracking-[0.2em] uppercase font-medium pointer-events-auto hover:text-mg-accent transition-colors duration-300">
+          <a href="#" className="font-sans text-[10px] tracking-[0.2em] uppercase font-medium pointer-events-auto hover:text-mg-accent-orange transition-colors duration-300">
             MG Home Decors
           </a>
 
           <button
-            className="text-[10px] tracking-[0.2em] uppercase font-medium hover:text-mg-accent hover:border-mg-accent transition-colors duration-300 pointer-events-auto border border-mg-white/20 px-6 py-2 rounded-full"
-            onClick={() => setIsMobileMenuOpen(true)}
+            className="group flex items-center gap-4 pointer-events-auto relative z-[110]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            Menu
+            <span className="hidden md:block text-[10px] tracking-[0.2em] uppercase font-medium group-hover:text-mg-accent-orange transition-colors duration-300">
+              {isMobileMenuOpen ? 'Close' : 'Menu'}
+            </span>
+            <div className="w-10 h-10 flex items-center justify-center border border-mg-white/20 rounded-full group-hover:border-mg-accent-orange transition-colors duration-300">
+              <div className="relative w-4 h-3 flex flex-col justify-between items-center">
+                <motion.span 
+                  className="w-full h-px bg-mg-white group-hover:bg-mg-accent-orange block" 
+                  animate={isMobileMenuOpen ? { rotate: 45, y: 5.5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.span 
+                  className="w-full h-px bg-mg-white group-hover:bg-mg-accent-orange block" 
+                  animate={isMobileMenuOpen ? { x: -20, opacity: 0 } : { x: 0, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.span 
+                  className="w-full h-px bg-mg-white group-hover:bg-mg-accent-orange block" 
+                  animate={isMobileMenuOpen ? { rotate: -45, y: -5.5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+            </div>
           </button>
         </div>
       </motion.nav>
@@ -43,12 +64,6 @@ export default function Navbar() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-[100] bg-mg-dark/98 backdrop-blur-3xl text-mg-white flex flex-col justify-center items-center"
           >
-            <button
-              className="absolute top-8 right-6 md:right-12 text-[10px] tracking-[0.2em] uppercase font-medium hover:text-mg-accent-orange transition-colors duration-300 border border-mg-white/20 px-6 py-2 rounded-full"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Close
-            </button>
             <div className="flex flex-col items-center gap-8">
               {navLinks.map((link, i) => (
                 <motion.a
