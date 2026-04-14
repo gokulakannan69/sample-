@@ -84,8 +84,8 @@ export default function ProjectDetails({
 
           {/* 3D Carousel */}
           <div 
-            className="relative h-[50vh] md:h-[70vh] w-full flex items-center justify-center mt-10" 
-            style={{ perspective: '1200px' }}
+            className="relative h-[60vh] md:h-[75vh] w-full flex items-center justify-center mt-4 overflow-visible" 
+            style={{ perspective: '2000px' }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
@@ -103,7 +103,7 @@ export default function ProjectDetails({
                    key={i}
                    drag={isCenter ? "x" : false}
                    dragConstraints={{ left: 0, right: 0 }}
-                   dragElastic={1}
+                   dragElastic={0.2}
                    onDragEnd={(e, { offset, velocity }) => {
                      const swipe = swipePower(offset.x, velocity.x);
                      if (swipe < -swipeConfidenceThreshold) {
@@ -112,19 +112,38 @@ export default function ProjectDetails({
                        prev();
                      }
                    }}
+                   initial={false}
                    animate={{
-                     x: offset * 250,
-                     scale: isCenter ? 1 : 0.85,
-                     rotateY: offset * -25,
-                     z: isCenter ? 0 : -Math.abs(offset) * 100,
+                     x: offset * 350,
+                     scale: isCenter ? 1 : 0.8,
+                     rotateY: offset * -45,
+                     z: isCenter ? 0 : -300,
                      zIndex: 10 - Math.abs(offset),
                      opacity: 1
                    }}
-                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                   className={`absolute w-[90%] md:w-[70%] max-w-6xl aspect-video ${isCenter ? 'cursor-grab active:cursor-grabbing pointer-events-auto shadow-2xl' : 'cursor-pointer pointer-events-auto'}`}
+                   transition={{ 
+                     type: "spring",
+                     stiffness: 80,
+                     damping: 25,
+                     mass: 1
+                   }}
+                   className={`absolute w-[85%] md:w-[65%] max-w-6xl aspect-[16/10] ${isCenter ? 'cursor-grab active:cursor-grabbing pointer-events-auto shadow-2xl' : 'cursor-pointer pointer-events-auto'}`}
                    onClick={() => !isCenter && setCurrentIndex(i)}
+                   style={{ transformStyle: "preserve-3d" }}
                  >
-                   <img src={img} alt="" className={`w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.1)] pointer-events-none rounded-sm ${!isCenter ? 'blur-[2px] brightness-90 grayscale-[0.5]' : ''}`} />
+                   <div className="relative w-full h-full rounded-lg overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.15)] group">
+                     <motion.img 
+                       src={img} 
+                       alt="" 
+                       animate={{
+                         x: isCenter ? 0 : offset * -20,
+                         scale: isCenter ? 1.05 : 1
+                       }}
+                       transition={{ duration: 1 }}
+                       className={`w-full h-full object-cover pointer-events-none transition-all duration-700 ${!isCenter ? 'blur-[4px] brightness-75 grayscale-[0.3]' : 'brightness-105'}`} 
+                     />
+                     <div className="absolute inset-0 bg-mg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                   </div>
                  </motion.div>
                )
              })}

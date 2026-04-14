@@ -1,15 +1,24 @@
 import { useRef, useMemo, useState, useEffect, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, ContactShadows, PresentationControls, Sparkles, useTexture, Float, Preload } from '@react-three/drei';
 import * as THREE from 'three';
 
 function ZenWaterPavilion() {
   const groupRef = useRef<THREE.Group>(null);
+  const lightRef = useRef<THREE.PointLight>(null);
   const concreteTexture = useTexture('https://images.unsplash.com/photo-1533158326339-7f3cf2404354?auto=format&fit=crop&w=1200&q=80');
   
   useFrame((state) => {
+    const t = state.clock.elapsedTime;
     if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.05; // Gentle float
+      // More organic multi-axis float
+      groupRef.current.position.y = Math.sin(t * 0.5) * 0.05 + Math.cos(t * 0.8) * 0.02;
+      groupRef.current.rotation.x = Math.sin(t * 0.3) * 0.01;
+      groupRef.current.rotation.z = Math.cos(t * 0.4) * 0.01;
+    }
+    if (lightRef.current) {
+      // Breathing light effect
+      lightRef.current.intensity = 3 + Math.sin(t * 2) * 0.5;
     }
   });
 
@@ -30,7 +39,7 @@ function ZenWaterPavilion() {
 
       {/* Floating Concrete Steps leading to Pavilion */}
       {[...Array(6)].map((_, i) => (
-        <Float key={i} speed={2} floatIntensity={0.1} rotationIntensity={0.05}>
+        <Float key={i} speed={1.5} floatIntensity={0.2} rotationIntensity={0.1}>
           <mesh position={[0, -1.3, i * 2 - 4]} castShadow receiveShadow>
             <boxGeometry args={[3, 0.2, 1.2]} />
             <meshStandardMaterial 
@@ -68,7 +77,7 @@ function ZenWaterPavilion() {
         </mesh>
         
         {/* Ambient warm light inside pavilion */}
-        <pointLight position={[0, 3, 0]} intensity={3} color="#f97316" distance={8} />
+        <pointLight ref={lightRef} position={[0, 3, 0]} intensity={3} color="#f97316" distance={8} />
       </group>
       
       {/* Decorative Zen Stones in water */}
@@ -85,12 +94,27 @@ function ZenWaterPavilion() {
 }
 
 function CinematicCamera() {
+  const { mouse } = useThree();
+  const targetPos = useRef(new THREE.Vector3(0, 2, 10));
+  
   useFrame((state) => {
-    // Drone-like slow sweep over water towards pavilion
-    const time = state.clock.elapsedTime;
-    state.camera.position.x = Math.sin(time * 0.05) * 8;
-    state.camera.position.z = 10 + Math.cos(time * 0.05) * 4;
-    state.camera.position.y = 2 + Math.sin(time * 0.2) * 0.5;
+    const t = state.clock.elapsedTime;
+    
+    // Base cinematic movement
+    const baseX = Math.sin(t * 0.05) * 8;
+    const baseZ = 10 + Math.cos(t * 0.05) * 4;
+    const baseY = 2 + Math.sin(t * 0.2) * 0.5;
+
+    // Subtle mouse parallax influence
+    const parallaxX = mouse.x * 2;
+    const parallaxY = mouse.y * 1;
+
+    // Smooth lerping to final target
+    targetPos.current.x = THREE.MathUtils.lerp(targetPos.current.x, baseX + parallaxX, 0.05);
+    targetPos.current.y = THREE.MathUtils.lerp(targetPos.current.y, baseY + parallaxY, 0.05);
+    targetPos.current.z = THREE.MathUtils.lerp(targetPos.current.z, baseZ, 0.05);
+
+    state.camera.position.copy(targetPos.current);
     state.camera.lookAt(0, 0, -4);
   });
   return null;
