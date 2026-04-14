@@ -111,7 +111,11 @@ function CinematicCamera() {
 export default function Hero3D() {
   return (
     <div className="w-full h-full absolute inset-0 z-0 pointer-events-auto bg-[#060608]">
-      <Canvas shadows camera={{ position: [10, 2, 10], fov: 45 }}>
+      <Canvas 
+        shadows 
+        dpr={[1, 1.5]} /* Essential for performance on high-DPI/mobile screens */
+        camera={{ position: [10, 2, 10], fov: 45 }}
+      >
         <color attach="background" args={['#0f121a']} />
         <fog attach="fog" args={['#0f121a', 10, 40]} />
         <ambientLight intensity={0.3} color="#ffe5b4" />
@@ -120,7 +124,7 @@ export default function Hero3D() {
           intensity={3}
           color="#fda403" /* Warm sunset color */
           castShadow
-          shadow-mapSize={[2048, 2048]}
+          shadow-mapSize={[1024, 1024]} /* Reduced from 2048 for VRAM efficiency */
           shadow-bias={-0.0001}
         />
         <CinematicCamera />
@@ -132,7 +136,7 @@ export default function Hero3D() {
           azimuth={[-Math.PI / 6, Math.PI / 6]}
         >
           <ZenWaterPavilion />
-          <Sparkles count={200} scale={25} size={2} speed={0.2} opacity={0.3} color="#fda403" position={[0, 2, -4]} />
+          <Sparkles count={50} scale={25} size={1.5} speed={0.1} opacity={0.2} color="#fda403" position={[0, 2, -4]} />
         </PresentationControls>
         <ContactShadows position={[0, -1.49, 0]} opacity={0.5} scale={30} blur={2.5} far={4} color="#000000" />
         <Environment preset="sunset" />
