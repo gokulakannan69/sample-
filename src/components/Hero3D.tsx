@@ -1,19 +1,7 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, ContactShadows, PresentationControls, Sparkles, useTexture, Float } from '@react-three/drei';
+import { Environment, ContactShadows, PresentationControls, Sparkles, useTexture, Float, Preload } from '@react-three/drei';
 import * as THREE from 'three';
-
-function BackgroundArchitecture() {
-  // Using a high-end architecture image as a professional backdrop
-  const texture = useTexture('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80');
-  
-  return (
-    <mesh position={[0, 5, -15]} rotation={[0, 0, 0]}>
-      <planeGeometry args={[60, 40]} />
-      <meshBasicMaterial map={texture} transparent opacity={0.3} toneMapped={false} />
-    </mesh>
-  );
-}
 
 function ZenWaterPavilion() {
   const groupRef = useRef<THREE.Group>(null);
@@ -108,39 +96,63 @@ function CinematicCamera() {
   return null;
 }
 
-export default function Hero3D() {
+export default function Hero3D({ paused = false }: { paused?: boolean }) {
+  const [isVisible, setIsVisible] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="w-full h-full absolute inset-0 z-0 pointer-events-auto bg-[#060608]">
-      <Canvas 
-        shadows 
-        dpr={[1, 1.5]} /* Essential for performance on high-DPI/mobile screens */
-        camera={{ position: [10, 2, 10], fov: 45 }}
-      >
-        <color attach="background" args={['#0f121a']} />
-        <fog attach="fog" args={['#0f121a', 10, 40]} />
-        <ambientLight intensity={0.3} color="#ffe5b4" />
-        <directionalLight
-          position={[15, 10, -5]} /* Sunset angle */
-          intensity={3}
-          color="#fda403" /* Warm sunset color */
-          castShadow
-          shadow-mapSize={[1024, 1024]} /* Reduced from 2048 for VRAM efficiency */
-          shadow-bias={-0.0001}
-        />
-        <CinematicCamera />
-        <PresentationControls
-          global
-          snap={true}
-          rotation={[0, 0, 0]}
-          polar={[-Math.PI / 10, Math.PI / 10]}
-          azimuth={[-Math.PI / 6, Math.PI / 6]}
-        >
-          <ZenWaterPavilion />
-          <Sparkles count={50} scale={25} size={1.5} speed={0.1} opacity={0.2} color="#fda403" position={[0, 2, -4]} />
-        </PresentationControls>
-        <ContactShadows position={[0, -1.49, 0]} opacity={0.5} scale={30} blur={2.5} far={4} color="#000000" />
-        <Environment preset="sunset" />
-      </Canvas>
+    <div ref={containerRef} className="w-full h-full absolute inset-0 z-0 pointer-events-auto bg-[#060608]">
+      {isVisible && !paused && (
+        <Suspense fallback={null}>
+          <Canvas 
+            shadows 
+            dpr={[1, 1.5]} /* Essential for performance on high-DPI/mobile screens */
+            camera={{ position: [10, 2, 10], fov: 45 }}
+            gl={{ powerPreference: "high-performance", antialias: false }}
+          >
+            <color attach="background" args={['#0f121a']} />
+            <fog attach="fog" args={['#0f121a', 10, 40]} />
+            <ambientLight intensity={0.3} color="#ffe5b4" />
+            <directionalLight
+              position={[15, 10, -5]} /* Sunset angle */
+              intensity={3}
+              color="#fda403" /* Warm sunset color */
+              castShadow
+              shadow-mapSize={[1024, 1024]}
+              shadow-bias={-0.0001}
+            />
+            <CinematicCamera />
+            <PresentationControls
+              global
+              snap={true}
+              rotation={[0, 0, 0]}
+              polar={[-Math.PI / 10, Math.PI / 10]}
+              azimuth={[-Math.PI / 6, Math.PI / 6]}
+            >
+              <ZenWaterPavilion />
+              <Sparkles count={50} scale={25} size={1.5} speed={0.1} opacity={0.2} color="#fda403" position={[0, 2, -4]} />
+            </PresentationControls>
+            <ContactShadows position={[0, -1.49, 0]} opacity={0.5} scale={30} blur={2.5} far={4} color="#000000" />
+            <Environment preset="sunset" />
+            <Preload all />
+          </Canvas>
+        </Suspense>
+      )}
     </div>
   );
 }

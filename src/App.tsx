@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import SmoothScroll from './components/SmoothScroll';
 import Navbar from './components/Navbar';
@@ -12,12 +13,14 @@ import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 
 export default function App() {
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+
   return (
     <SmoothScroll>
       <main className="bg-mg-dark min-h-screen">
         <Navbar />
         <section id="home" className="relative w-full h-screen overflow-hidden bg-mg-dark">
-          <Hero3D />
+          <Hero3D paused={!!selectedProject} />
           <div className="absolute inset-0 flex items-center px-6 md:px-12 pointer-events-none z-10">
             <div className="w-full max-w-7xl mx-auto">
               <motion.div 
@@ -71,7 +74,7 @@ export default function App() {
           </div>
         </section>
         <About />
-        <Gallery />
+        <Gallery selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         <Footer />
       </main>
     </SmoothScroll>

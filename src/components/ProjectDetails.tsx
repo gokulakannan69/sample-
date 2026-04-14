@@ -96,6 +96,8 @@ export default function ProjectDetails({
              {project.images.map((img: string, i: number) => {
                const offset = i - currentIndex;
                const isCenter = offset === 0;
+               if (Math.abs(offset) > 1) return null; // Only render immediate neighbors
+               
                return (
                  <motion.div
                    key={i}
@@ -116,13 +118,13 @@ export default function ProjectDetails({
                      rotateY: offset * -25,
                      z: isCenter ? 0 : -Math.abs(offset) * 100,
                      zIndex: 10 - Math.abs(offset),
-                     opacity: Math.abs(offset) > 1 ? 0 : 1
+                     opacity: 1
                    }}
                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                   className={`absolute w-[90%] md:w-[70%] max-w-6xl aspect-video ${isCenter ? 'cursor-grab active:cursor-grabbing pointer-events-auto shadow-2xl' : 'cursor-pointer pointer-events-auto opacity-50'}`}
+                   className={`absolute w-[90%] md:w-[70%] max-w-6xl aspect-video ${isCenter ? 'cursor-grab active:cursor-grabbing pointer-events-auto shadow-2xl' : 'cursor-pointer pointer-events-auto'}`}
                    onClick={() => !isCenter && setCurrentIndex(i)}
                  >
-                   <img src={img} alt="" className="w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-none rounded-sm" />
+                   <img src={img} alt="" className={`w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-none rounded-sm ${!isCenter ? 'blur-[2px] brightness-50' : ''}`} />
                  </motion.div>
                )
              })}
